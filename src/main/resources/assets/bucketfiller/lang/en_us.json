@@ -1,0 +1,9 @@
+{
+  "item.modmdk.sample_item": "Sample Item",
+  "block.modmdk.sample_block": "Sample Block",
+  "itemgroup.modmdkgroup": "Mod Development Kit",
+  "modmdk.tooltip.liquid.amount.with.capacity": "%s / %s mB",
+  "modmdk.tooltip.liquid.amount": "%s mB",
+
+  "block.minecraft.empty": "Empty"
+}

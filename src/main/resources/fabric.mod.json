@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "bucketfiller",
+  "version": "${version}",
+  "name": "Bucket Filler",
+  "description": "A simple block that observers front cauldron, fills the empty bucket with cauldron's fluid.",
+  "authors": [
+    "Jiraiyah"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "MIT",
+  "icon": "assets/bucketfiller/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "jiraiyah.bucketfiller.ModMain"
+    ],
+    "fabric-datagen": [
+      "jiraiyah.bucketfiller.ModDataGenerator"
+    ],
+    "client": [
+      "jiraiyah.bucketfiller.ModClient"
+    ]
+  },
+  "mixins": [
+    "bucketfiller.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.24",
+    "minecraft": "~1.20.2",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

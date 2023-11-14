@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "bucketfiller:block/filler",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "bucketfiller:block/filler",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bucketfiller:block/filler"
+    },
+    "facing=south": {
+      "model": "bucketfiller:block/filler",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "bucketfiller:block/filler",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "bucketfiller:block/filler",
+      "y": 270
+    }
+  }
+}
