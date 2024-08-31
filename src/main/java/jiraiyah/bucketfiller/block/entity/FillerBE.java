@@ -1,7 +1,6 @@
 package jiraiyah.bucketfiller.block.entity;
 
 import jiraiyah.bucketfiller.block.ModBlockEntities;
-import jiraiyah.bucketfiller.block.ModBlocks;
 import jiraiyah.bucketfiller.block.custom.FillerBlock;
 import jiraiyah.bucketfiller.data.FillerData;
 import jiraiyah.bucketfiller.gui.description.FillerDescription;
@@ -52,7 +51,7 @@ public class FillerBE extends BEWithInventory
         // TOP --> RAW SLOT
 
         if (side == Direction.UP)
-            return slot == BASE_INPUT_SLOT && StackAcceptableInSlot(stack, slot);
+            return slot == BASE_INPUT_SLOT && stackAcceptableInSlot(stack, slot);
         if (side == Direction.DOWN)
             return false;
 
@@ -61,10 +60,10 @@ public class FillerBE extends BEWithInventory
 
         return switch (localDir)
         {
-            default -> side.getOpposite() == Direction.NORTH && slot == BASE_INPUT_SLOT && StackAcceptableInSlot(stack, slot);
-            case EAST -> side.rotateYClockwise() == Direction.NORTH && slot == BASE_INPUT_SLOT && StackAcceptableInSlot(stack, slot);
-            case SOUTH -> side == Direction.NORTH && slot == BASE_INPUT_SLOT && StackAcceptableInSlot(stack, slot);
-            case WEST -> side.rotateYCounterclockwise() == Direction.NORTH && slot == BASE_INPUT_SLOT && StackAcceptableInSlot(stack, slot);
+            default -> side.getOpposite() == Direction.NORTH && slot == BASE_INPUT_SLOT && stackAcceptableInSlot(stack, slot);
+            case EAST -> side.rotateYClockwise() == Direction.NORTH && slot == BASE_INPUT_SLOT && stackAcceptableInSlot(stack, slot);
+            case SOUTH -> side == Direction.NORTH && slot == BASE_INPUT_SLOT && stackAcceptableInSlot(stack, slot);
+            case WEST -> side.rotateYCounterclockwise() == Direction.NORTH && slot == BASE_INPUT_SLOT && stackAcceptableInSlot(stack, slot);
         };
 
     }
@@ -152,14 +151,14 @@ public class FillerBE extends BEWithInventory
     }
 
     //region PRIVATE METHODS
-    private boolean StackAcceptableInSlot(ItemStack stack, int slot)
+    private boolean stackAcceptableInSlot(ItemStack stack, int slot)
     {
         if (slot == BASE_INPUT_SLOT)
-            return StackIsLiquidable(stack);
+            return stackIsLiquidable(stack);
         return false;
     }
 
-    private boolean StackIsLiquidable(ItemStack stack)
+    private boolean stackIsLiquidable(ItemStack stack)
     {
         return stack.isOf(Items.BUCKET);
     }
