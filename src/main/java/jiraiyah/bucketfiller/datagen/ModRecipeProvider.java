@@ -1,5 +1,6 @@
 package jiraiyah.bucketfiller.datagen;
 
+import jiraiyah.bucketfiller.Reference;
 import jiraiyah.bucketfiller.block.ModBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -7,13 +8,17 @@ import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
+
+import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends FabricRecipeProvider
 {
-    public ModRecipeProvider(FabricDataOutput output)
+
+    public ModRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture)
     {
-        super(output);
+        super(output, registriesFuture);
     }
 
     @Override
@@ -27,6 +32,6 @@ public class ModRecipeProvider extends FabricRecipeProvider
                 .criterion(hasItem(Items.OBSERVER), conditionsFromItem(Items.OBSERVER))
                 .criterion(hasItem(Items.BUCKET), conditionsFromItem(Items.BUCKET))
                 .criterion(hasItem(Items.DISPENSER), conditionsFromItem(Items.DISPENSER))
-                .offerTo(exporter, new Identifier(getRecipeName(ModBlocks.FILLER)));
+                .offerTo(exporter, Reference.identifier(getRecipeName(ModBlocks.FILLER)));
     }
 }

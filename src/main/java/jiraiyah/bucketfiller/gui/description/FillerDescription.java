@@ -42,8 +42,8 @@ public class FillerDescription extends SyncedGuiDescription
         base_input_slot.setInputFilter(itemStack -> itemStack.isOf(Items.BUCKET));
         base_output_slot.setInsertingAllowed(false);
 
-        WSprite bucketInSlot = new WSprite(Reference.id("textures/gui/slot_bucket.png"));
-        WSprite littleArrow = new WSprite(Reference.id("textures/gui/little_arrow_down.png"));
+        WSprite bucketInSlot = new WSprite(Reference.identifier("textures/gui/slot_bucket.png"));
+        WSprite littleArrow = new WSprite(Reference.identifier("textures/gui/little_arrow_down.png"));
 
         root.add(base_input_slot, 79, 13);
         root.add(base_output_slot, 79, 59);

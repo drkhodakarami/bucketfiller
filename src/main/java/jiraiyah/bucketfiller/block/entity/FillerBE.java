@@ -2,6 +2,7 @@ package jiraiyah.bucketfiller.block.entity;
 
 import jiraiyah.bucketfiller.block.ModBlockEntities;
 import jiraiyah.bucketfiller.block.custom.FillerBlock;
+import jiraiyah.bucketfiller.data.FillerData;
 import jiraiyah.bucketfiller.gui.description.FillerDescription;
 import jiraiyah.bucketfiller.utils.block.entity.BEWithInventory;
 import net.minecraft.block.Block;
@@ -13,8 +14,10 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -82,17 +85,23 @@ public class FillerBE extends BEWithInventory
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt)
+    public FillerData getScreenOpeningData(ServerPlayerEntity player)
     {
-        super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, inventory);
+        return new FillerData(pos);
     }
 
     @Override
-    public void readNbt(NbtCompound nbt)
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup)
     {
-        super.readNbt(nbt);
-        Inventories.readNbt(nbt, inventory);
+        super.writeNbt(nbt, registryLookup);
+        Inventories.writeNbt(nbt, inventory, registryLookup);
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup)
+    {
+        super.readNbt(nbt, registryLookup);
+        Inventories.readNbt(nbt, inventory, registryLookup);
     }
 
     @Override

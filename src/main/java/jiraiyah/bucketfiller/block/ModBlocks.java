@@ -2,10 +2,10 @@ package jiraiyah.bucketfiller.block;
 
 import jiraiyah.bucketfiller.Reference;
 import jiraiyah.bucketfiller.block.custom.*;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -17,7 +17,7 @@ import net.minecraft.registry.Registry;
 public class ModBlocks
 {
     public static final FillerBlock FILLER = (FillerBlock) registerBlock("filler",
-            new FillerBlock(FabricBlockSettings.copyOf(Blocks.STONE).requiresTool()));
+            new FillerBlock(AbstractBlock.Settings.copy(Blocks.STONE).requiresTool()));
 
     private ModBlocks()
     {
@@ -33,13 +33,13 @@ public class ModBlocks
     private static Block registerBlock(String name, Block block)
     {
         registerBlockItem(name, block);
-        return Registry.register(Registries.BLOCK, Reference.id(name), block);
+        return Registry.register(Registries.BLOCK, Reference.identifier(name), block);
     }
 
     private static Item registerBlockItem(String name, Block block)
     {
-        return Registry.register(Registries.ITEM, Reference.id(name),
-                new BlockItem(block, new FabricItemSettings()));
+        return Registry.register(Registries.ITEM, Reference.identifier(name),
+                new BlockItem(block, new Item.Settings()));
     }
 
     public static void register()

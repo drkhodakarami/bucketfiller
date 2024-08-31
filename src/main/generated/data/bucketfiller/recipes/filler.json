@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "D": {
+      "item": "minecraft:dispenser"
+    },
+    "O": {
+      "item": "minecraft:observer"
+    }
+  },
+  "pattern": [
+    "OBD"
+  ],
+  "result": {
+    "item": "bucketfiller:filler"
+  },
+  "show_notification": true
+}

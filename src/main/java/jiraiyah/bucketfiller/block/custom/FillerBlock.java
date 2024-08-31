@@ -1,5 +1,6 @@
 package jiraiyah.bucketfiller.block.custom;
 
+import com.mojang.serialization.MapCodec;
 import jiraiyah.bucketfiller.Reference;
 import jiraiyah.bucketfiller.block.ModBlockEntities;
 import jiraiyah.bucketfiller.block.entity.FillerBE;
@@ -9,7 +10,6 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -22,12 +22,13 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 public class FillerBlock extends BlockWithEntity
 {
-    public static final Identifier ID = Reference.id("filler");
+    public static final MapCodec<FillerBlock> CODEC = createCodec(FillerBlock::new);
+
+    public static final Identifier ID = Reference.identifier("filler");
     public static final DirectionProperty FACING = Properties.FACING;
 
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 12, 16);
@@ -38,6 +39,12 @@ public class FillerBlock extends BlockWithEntity
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH));
     }
 
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec()
+    {
+        return CODEC;
+    }
+
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
@@ -46,16 +53,8 @@ public class FillerBlock extends BlockWithEntity
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit)
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit)
     {
-        /*if (!world.isClient)
-        {
-            NamedScreenHandlerFactory screenHandlerFactory = ((FillerBE) world.getBlockEntity(pos));
-
-            if (screenHandlerFactory != null)
-                player.openHandledScreen(screenHandlerFactory);
-        }*/
-
         player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
         return ActionResult.SUCCESS;
     }

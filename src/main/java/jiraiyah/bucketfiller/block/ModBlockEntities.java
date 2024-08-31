@@ -11,8 +11,8 @@ import net.minecraft.registry.Registry;
 public class ModBlockEntities
 {
     public static BlockEntityType<FillerBE> FILLER =
-            Registry.register(Registries.BLOCK_ENTITY_TYPE, Reference.MOD_ID + ":" + FillerBlock.ID.getPath(),
-                    FabricBlockEntityTypeBuilder.create(FillerBE::new, ModBlocks.FILLER).build());
+            Registry.register(Registries.BLOCK_ENTITY_TYPE, Reference.ModID + ":" + FillerBlock.ID.getPath(),
+                              FabricBlockEntityTypeBuilder.create(FillerBE::new, ModBlocks.FILLER).build());
 
     public ModBlockEntities()
     {

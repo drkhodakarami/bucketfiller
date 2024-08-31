@@ -57,11 +57,11 @@ public abstract class BEWithInventory extends BlockEntity implements NamedScreen
         return inventory;
     }
 
-    @Override
+    /*@Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf)
     {
         buf.writeBlockPos(pos);
-    }
+    }*/
 
     @Override
     public Text getDisplayName()
@@ -87,11 +87,11 @@ public abstract class BEWithInventory extends BlockEntity implements NamedScreen
         return BlockEntityUpdateS2CPacket.create(this);
     }
 
-    @Override
+    /*@Override
     public NbtCompound toInitialChunkDataNbt()
     {
         return createNbt();
-    }
+    }*/
 
     @Override
     public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos)
