@@ -1,6 +1,7 @@
 package jiraiyah.bucketfiller.block.entity;
 
 import jiraiyah.bucketfiller.block.ModBlockEntities;
+import jiraiyah.bucketfiller.block.ModBlocks;
 import jiraiyah.bucketfiller.block.custom.FillerBlock;
 import jiraiyah.bucketfiller.data.FillerData;
 import jiraiyah.bucketfiller.gui.description.FillerDescription;
@@ -115,6 +116,13 @@ public class FillerBE extends BEWithInventory
     {
         if (world.isClient())
             return;
+
+        if(state.get(FillerBlock.POWERED))
+        {
+            world.setBlockState(pos, state.with(FillerBlock.POWERED, false), Block.NOTIFY_ALL);
+            return;
+        }
+
         var offset = pos.offset(state.get(Properties.FACING), 1);
         var blockState = world.getBlockState(offset);
         var block = blockState.getBlock();
@@ -122,14 +130,14 @@ public class FillerBE extends BEWithInventory
                 block == Blocks.LAVA_CAULDRON)
         {
             if(isItemStackEmptyBucket(BASE_INPUT_SLOT) && isOutputSlotEmptyOrReceivable(BASE_OUTPUT_SLOT))
-                tickInventory(world, offset, block);
+                tickInventory(world, offset, block, pos, state);
             world.updateNeighbors(pos, state.getBlock());
         }
         else if(block == Blocks.CAULDRON)
             world.updateNeighbors(pos, state.getBlock());
     }
 
-    private void tickInventory(World world, BlockPos pos, Block block)
+    private void tickInventory(World world, BlockPos pos, Block block, BlockPos origin, BlockState state)
     {
         if(block == Blocks.WATER_CAULDRON)
             this.setStack(BASE_OUTPUT_SLOT, new ItemStack(Items.WATER_BUCKET, getStack(BASE_OUTPUT_SLOT).getCount() + 1));
@@ -139,6 +147,7 @@ public class FillerBE extends BEWithInventory
             this.setStack(BASE_OUTPUT_SLOT, new ItemStack(Items.POWDER_SNOW_BUCKET, getStack(BASE_OUTPUT_SLOT).getCount() + 1));
         this.removeStack(BASE_INPUT_SLOT, 1);
         world.setBlockState(pos, Blocks.CAULDRON.getDefaultState(), Block.NOTIFY_ALL);
+        world.setBlockState(origin, state.with(FillerBlock.POWERED, true), Block.NOTIFY_ALL);
         markDirty();
     }
 

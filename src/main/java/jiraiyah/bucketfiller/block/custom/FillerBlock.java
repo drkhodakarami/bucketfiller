@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.*;
@@ -30,6 +31,7 @@ public class FillerBlock extends BlockWithEntity
 
     public static final Identifier ID = Reference.identifier("filler");
     public static final DirectionProperty FACING = Properties.FACING;
+    public static final BooleanProperty POWERED = Properties.POWERED;
 
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 12, 16);
 
@@ -37,6 +39,7 @@ public class FillerBlock extends BlockWithEntity
     {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.SOUTH));
+        this.setDefaultState(this.stateManager.getDefaultState().with(POWERED, false));
     }
 
     @Override
@@ -111,6 +114,7 @@ public class FillerBlock extends BlockWithEntity
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder)
     {
         builder.add(FACING);
+        builder.add(POWERED);
     }
 
     @Override
@@ -124,7 +128,7 @@ public class FillerBlock extends BlockWithEntity
     @Override
     public boolean emitsRedstonePower(BlockState state)
     {
-        return false;
+        return true;
     }
 
     @Override
@@ -136,13 +140,9 @@ public class FillerBlock extends BlockWithEntity
     @Override
     public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction)
     {
-        var blockState = world.getBlockState(pos.offset(state.get(Properties.FACING), 1));
-        var block = blockState.getBlock();
-        if((block == Blocks.WATER_CAULDRON && blockState.get(Properties.LEVEL_3) == 3) ||
-            (block == Blocks.POWDER_SNOW_CAULDRON && blockState.get(Properties.LEVEL_3) == 3) ||
-            block == Blocks.LAVA_CAULDRON)
-            return 0;
-        return 15;
+        if(state.get(POWERED) && direction != Direction.DOWN && direction != Direction.UP)
+            return 15;
+        return 0;
     }
 
     protected void updateNeighbors(World world, BlockPos pos, BlockState state)
